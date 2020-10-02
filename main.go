@@ -14,10 +14,10 @@ func main() {
 
 	app := wrapper.CreateNewWrapper("./tests/test_app")
 
-	stdoutTrigger := ioreader.CreateNewReaderTrigger(&app.Stdout, "error")
+	stdoutTrigger := ioreader.CreateNewReaderTrigger(&app.Stdout, "error", true)
 	app.AddNewTrigger(&stdoutTrigger)
 
-	stderrTrigger := ioreader.CreateNewReaderTrigger(&app.Stderr, "error")
+	stderrTrigger := ioreader.CreateNewReaderTrigger(&app.Stderr, "error", false)
 	app.AddNewTrigger(&stderrTrigger)
 
 	tempHandler := filehandler.CreateNewFileHander("/sys/class/hwmon/hwmon0/temp1_input")
