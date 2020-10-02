@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	"./lib/handlers/cmdhandler"
-	"./lib/handlers/filehandler"
-	"./lib/triggers/ioreader"
-	"./lib/wrapper"
+	"github.com/OpenPixelSystems/IAW/lib/handlers/cmdhandler"
+	"github.com/OpenPixelSystems/IAW/lib/handlers/filehandler"
+	"github.com/OpenPixelSystems/IAW/lib/triggers/ioreader"
+	"github.com/OpenPixelSystems/IAW/lib/wrapper"
 )
 
 func main() {

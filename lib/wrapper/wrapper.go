@@ -8,8 +8,8 @@ import (
 	"path"
 	"time"
 
-	"../handlers"
-	"../triggers"
+	"github.com/OpenPixelSystems/IAW/lib/handlers"
+	"github.com/OpenPixelSystems/IAW/lib/triggers"
 )
 
 type Wrapper struct {
