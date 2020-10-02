@@ -1,5 +1,9 @@
 package handler
 
+import (
+	"sync"
+)
+
 type Handler interface {
-	RunHandler(outdir string)
+	RunHandler(wg *sync.WaitGroup, outdir string)
 }

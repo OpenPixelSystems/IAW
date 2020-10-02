@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"sync"
 	"time"
 
 	"github.com/OpenPixelSystems/IAW/lib/handlers"
@@ -22,6 +23,8 @@ type Wrapper struct {
 
 	triggers []trigger.Trigger
 	handlers []handler.Handler
+
+	wg sync.WaitGroup
 
 	CmdDone bool
 }
@@ -59,7 +62,8 @@ func (w *Wrapper) RunHandlers() {
 	outDir := "output/" + time.Now().Format("2006-01-02_15:04:05") + "-" + path.Base(w.cmdStr)
 	os.MkdirAll(outDir, 0755)
 	for _, h := range w.handlers {
-		h.RunHandler(outDir)
+		w.wg.Add(1)
+		go h.RunHandler(&w.wg, outDir)
 	}
 }
 
@@ -69,6 +73,8 @@ func (w *Wrapper) CheckTriggers() bool {
 			log.Println("Triggerd!!")
 			t.ClearTrigger()
 			w.RunHandlers()
+
+			go t.Trigger() //Re-arm trigger that finished
 			return true
 		}
 	}
@@ -78,7 +84,11 @@ func (w *Wrapper) CheckTriggers() bool {
 func (w *Wrapper) RunCommand() {
 	log.Printf("Running: %s %s", w.cmdStr, w.argsStr)
 	if err := w.Cmd.Run(); err != nil {
-		log.Fatalf("Failed to run command: %s", err)
+		log.Fatalf("Wrapper: Failed to run command: %s", err.Error())
 	}
 	w.CmdDone = true
+}
+
+func (w *Wrapper) WaitForHandlers() {
+	w.wg.Wait()
 }

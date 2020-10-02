@@ -33,4 +33,5 @@ func main() {
 		app.CheckTriggers()
 	}
 
+	app.WaitForHandlers()
 }

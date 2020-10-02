@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"path"
+	"sync"
 )
 
 type FileHandler struct {
@@ -34,6 +35,7 @@ func (f *FileHandler) copyFile(outdir string) {
 	}
 }
 
-func (f *FileHandler) RunHandler(outdir string) {
+func (f *FileHandler) RunHandler(wg *sync.WaitGroup, outdir string) {
+	defer wg.Done()
 	f.copyFile(outdir)
 }
