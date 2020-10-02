@@ -3,7 +3,8 @@ package main
 import (
 	"log"
 
-	"./lib/triggers/reader"
+	"./lib/handlers/filehandler"
+	"./lib/triggers/ioreader"
 	"./lib/wrapper"
 )
 
@@ -17,6 +18,9 @@ func main() {
 
 	stderrTrigger := ioreader.CreateNewReaderTrigger(&app.Stderr, "error")
 	app.AddNewTrigger(&stderrTrigger)
+
+	tempHandler := filehandler.CreateNewFileHander("main.go")
+	app.AddNewHandler(tempHandler)
 
 	go app.RunCommand()
 

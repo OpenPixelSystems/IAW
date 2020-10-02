@@ -17,7 +17,7 @@ type ReaderTrigger struct {
 }
 
 func CreateNewReaderTrigger(reader *io.Reader, trigger string) ReaderTrigger {
-	log.Println("Creating new Reader Trigger")
+	log.Println("Creating new IO Reader Trigger")
 	var newTrigger ReaderTrigger
 	newTrigger.reader = reader
 	newTrigger.trigger = trigger
@@ -35,7 +35,6 @@ func (r *ReaderTrigger) Trigger() bool {
 	log.Printf("Running trigger on %s", r.trigger)
 	for r.scanner.Scan() {
 		buffer := r.scanner.Text()
-		log.Println(buffer)
 		if strings.Contains(buffer, r.trigger) {
 			r.triggerd = true
 			return true

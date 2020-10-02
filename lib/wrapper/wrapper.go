@@ -5,6 +5,7 @@ import (
 	"log"
 	"os/exec"
 
+	"../handlers"
 	"../triggers"
 )
 
@@ -17,6 +18,7 @@ type Wrapper struct {
 	Stderr io.Reader
 
 	triggers []trigger.Trigger
+	handlers []handler.Handler
 
 	CmdDone bool
 }
@@ -32,6 +34,10 @@ func CreateNewWrapper(cmd string, args ...string) *Wrapper {
 	newWrapper.Stderr, _ = newWrapper.Cmd.StderrPipe()
 
 	return &newWrapper
+}
+
+func (w *Wrapper) AddNewHandler(nh handler.Handler) {
+	w.handlers = append(w.handlers, nh)
 }
 
 func (w *Wrapper) AddNewTrigger(nt trigger.Trigger) {
@@ -57,7 +63,7 @@ func (w *Wrapper) CheckTriggers() bool {
 }
 
 func (w *Wrapper) RunCommand() {
-	log.Println("Running!")
+	log.Printf("Running: %s %s", w.cmdStr, w.argsStr)
 	if err := w.Cmd.Run(); err != nil {
 		log.Fatalf("Failed to run command: %s", err)
 	}
