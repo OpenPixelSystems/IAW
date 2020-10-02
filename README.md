@@ -11,9 +11,11 @@ IAW consists of 3 main layers.
 
 So a standard IAW flow looks like:
 
+```
 Wrapper -> Starts binary
 Triggers -> Added to Wrapper. For example a string trigger on the stdout or sterr of the binary
 Handlers -> Added to Wrapper. A file trigger, capture the output of a file at the time of trigger. This is mainly useful for system files. Such as temperature readings.
+```
 
 ## Types of triggers
 |Name|Description|
