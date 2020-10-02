@@ -1,3 +1,4 @@
 iaw-go
 *.swp
 test_app
+output/

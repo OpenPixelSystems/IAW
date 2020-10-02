@@ -3,7 +3,10 @@ package wrapper
 import (
 	"io"
 	"log"
+	"os"
 	"os/exec"
+	"path"
+	"time"
 
 	"../handlers"
 	"../triggers"
@@ -51,11 +54,21 @@ func (w *Wrapper) StartTriggers() {
 	}
 }
 
+func (w *Wrapper) RunHandlers() {
+
+	outDir := "output/" + time.Now().Format("2006-01-02_15:04:05") + "-" + path.Base(w.cmdStr)
+	os.MkdirAll(outDir, 0755)
+	for _, h := range w.handlers {
+		h.RunHandler(outDir)
+	}
+}
+
 func (w *Wrapper) CheckTriggers() bool {
 	for _, t := range w.triggers {
 		if t.Triggerd() {
 			log.Println("Triggerd!!")
 			t.ClearTrigger()
+			w.RunHandlers()
 			return true
 		}
 	}

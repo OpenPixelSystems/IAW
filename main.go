@@ -19,7 +19,7 @@ func main() {
 	stderrTrigger := ioreader.CreateNewReaderTrigger(&app.Stderr, "error")
 	app.AddNewTrigger(&stderrTrigger)
 
-	tempHandler := filehandler.CreateNewFileHander("main.go")
+	tempHandler := filehandler.CreateNewFileHander("/sys/class/hwmon/hwmon0/temp1_input")
 	app.AddNewHandler(tempHandler)
 
 	go app.RunCommand()

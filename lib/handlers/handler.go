@@ -1,5 +1,5 @@
 package handler
 
 type Handler interface {
-	RunHandler()
+	RunHandler(outdir string)
 }
