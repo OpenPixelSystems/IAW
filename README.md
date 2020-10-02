@@ -26,3 +26,4 @@ Handlers -> Added to Wrapper. A file trigger, capture the output of a file at th
 |Name|Description|
 |---|---|
 |filehandler| Capture the output of a given file.|
+|cmdhandler| Run a external command and capture the

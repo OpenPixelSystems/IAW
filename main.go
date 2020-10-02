@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"./lib/handlers/cmdhandler"
 	"./lib/handlers/filehandler"
 	"./lib/triggers/ioreader"
 	"./lib/wrapper"
@@ -21,6 +22,9 @@ func main() {
 
 	tempHandler := filehandler.CreateNewFileHander("/sys/class/hwmon/hwmon0/temp1_input")
 	app.AddNewHandler(tempHandler)
+
+	cmdHandler := cmdhandler.CreateNewCmdHandler("dmesg")
+	app.AddNewHandler(cmdHandler)
 
 	go app.RunCommand()
 
